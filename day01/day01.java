@@ -18,13 +18,16 @@ public class day01 {
 
             Collections.sort(first);
             Collections.sort(second);
-            System.out.println(first.size());
-            int sum = 0;
+            int part1 = 0;
+            int part2 = 0;
             for (int i = 0; i < first.size(); i++) {
+                int count = Collections.frequency(second, first.get(i));
+                part2 += first.get(i) * count;
                 int diff = Math.abs(first.get(i) - second.get(i));
-                sum += diff;
+                part1 += diff;
             }
-            System.out.println(sum);
+            System.out.println(part1);
+            System.out.println(part2);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
