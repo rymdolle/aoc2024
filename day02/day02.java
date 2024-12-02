@@ -8,8 +8,8 @@ public class day02 {
         try (FileInputStream input = new FileInputStream("day02/input.txt")) {
             Scanner scanner = new Scanner(input);
 
-            int linum = 0;
-            var reports = new HashSet<Integer>();
+            var part1 = new HashSet<String>();
+            var part2 = new HashSet<String>();
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 Scanner lineScanner = new Scanner(line);
@@ -20,29 +20,44 @@ public class day02 {
                     report.add(lineScanner.nextInt());
                 }
 
-                int dir = report.get(1) - report.get(0);
-                for (int i = 1; i < report.size(); i++) {
-                    int diff = report.get(i) - report.get(i - 1);
-                    if (diff < 0 && dir > 0 || diff > 0 && dir < 0) {
-                        dir = 0;
-                        break;
+                if (checkReport(report)) {
+                    part1.add(line);
+                    part2.add(line);
+                } else {
+                    for (int i = 0; i < report.size(); i++) {
+                        var dampen = new ArrayList<>(report);
+                        dampen.remove(i);
+                        if (checkReport(dampen)) {
+                            part2.add(line);
+                            break;
+                        }
                     }
-                    if (Math.abs(diff) <= 0 || Math.abs(diff) > 3) {
-                        dir = 0;
-                        break;
-                    }
-                    dir += diff;
                 }
-
-                if (dir != 0) {
-                    reports.add(linum);
-                }
-
-                linum++;
             }
-            System.out.println(reports.size());
+            System.out.println(part1.size());
+            System.out.println(part2.size());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static boolean checkReport(ArrayList<Integer> report) {
+        int dir = report.get(1) - report.get(0);
+        for (int i = 0; i < report.size() - 1; i++) {
+            int diff = report.get(i + 1) - report.get(i);
+
+            // check if the direction is changing
+            if (diff < 0 && dir > 0 || diff > 0 && dir < 0) {
+                return false;
+            }
+
+            // check if the difference is too large
+            if (Math.abs(diff) <= 0 || Math.abs(diff) > 3) {
+                return false;
+            }
+            dir += diff;
+        }
+
+        return true;
     }
 }
