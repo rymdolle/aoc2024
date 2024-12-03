@@ -2,4 +2,4 @@
 
 https://adventofcode.com/2024/
 
-Trying to improve my skills Java.
+Trying to improve my skills in Java and C++.
