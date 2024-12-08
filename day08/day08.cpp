@@ -44,9 +44,7 @@ int main(int argc, char *argv[])
         y2 -= dy;
 
         while (y2+dy >= 0 && x2+dx >= 0 && y2+dy < grid.size() && x2+dx < grid[0].size()) {
-          if (y2+dy >= 0 && x2+dx >= 0 && y2+dy < grid.size() && x2+dx < grid[0].size()) {
-            grid[y2+dy][x2+dx] = '#';
-          }
+          grid[y2+dy][x2+dx] = '#';
           x2 += dx;
           y2 += dy;
         }
@@ -54,9 +52,7 @@ int main(int argc, char *argv[])
         int x3 = x - dx;
         int y3 = y - dy;
         while (y3-dy >= 0 && x3-dx >= 0 && y3-dy < grid.size() && x3-dx < grid[0].size()) {
-          if (y3-dy >= 0 && x3-dx >= 0 && y3-dy < grid.size() && x3-dx < grid[0].size()) {
-            grid[y3-dy][x3-dx] = '#';
-          }
+          grid[y3-dy][x3-dx] = '#';
           x3 -= dx;
           y3 -= dy;
         }
