@@ -7,41 +7,35 @@ val dirs = listOf(
     Point(0, 1),
     Point(-1, 0)
 )
-fun main() {
-    val grid: MutableList<String> = mutableListOf()
-    var start = Point(-1, -1)
-    File("day20/input.txt").readLines().forEachIndexed() { index, it ->
-        grid.add(it)
-        if (it.indexOf('S') >= 0) {
-            start = Point(it.indexOf('S'), index)
-            println("start: $start")
-        }
-
-        if (it.indexOf('E') >= 0) {
-            println("end:   ${Point(it.indexOf('E'), index)}")
-        }
+val grid: MutableList<String> = mutableListOf()
+var start = Point(-1, -1)
+File("input.txt").readLines().forEachIndexed() { y, it ->
+    grid.add(it)
+    val x = it.indexOf('S')
+    if (x >= 0) {
+        start = Point(x, y)
     }
-    val score = findPath(start, grid)
-    val cheats = findCheats(start, grid)
-    val saves = mutableMapOf<Int, Int>()
-    println("shortest path: $score")
-    println("total cheats:  ${cheats.size}")
-    println()
-    for (c in cheats) {
-        val gridCopy = grid.toMutableList()
-        gridCopy[c.y] = gridCopy[c.y].replaceRange(c.x, c.x+1, ".")
-        val path = findPath(start, gridCopy)
-        if (path < score) {
-            saves[score-path] = saves.getOrDefault(score-path, 0) + 1
-        }
-    }
-
-    // part 1
-    println(saves.keys.fold(0) { acc, key ->
-        if (key >= 100) acc+saves[key]!!
-        else acc
-    })
 }
+val score = findPath(start, grid)
+val cheats = findCheats(start, grid)
+val saves = mutableMapOf<Int, Int>()
+println("shortest path: $score")
+println("total cheats:  ${cheats.size}")
+println()
+for (c in cheats) {
+    val gridCopy = grid.toMutableList()
+    gridCopy[c.y] = gridCopy[c.y].replaceRange(c.x, c.x+1, ".")
+    val path = findPath(start, gridCopy)
+    if (path < score) {
+        saves[score-path] = saves.getOrDefault(score-path, 0) + 1
+    }
+}
+
+// part 1
+println(saves.keys.fold(0) { acc, key ->
+    if (key >= 100) acc+saves[key]!!
+    else acc
+})
 
 fun findCheats(start: Point, grid: List<String>): List<Point> {
     val q = mutableListOf(listOf(0, start.x, start.y))

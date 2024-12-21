@@ -1,21 +1,19 @@
 import java.io.File
 
-fun main() {
-    val records = mutableListOf<Int>()
-    val spaces = mutableListOf<Int>()
-    val data = File("day09/input.txt").readText().trim()
-    for (i in data.indices) {
-        if (i % 2 == 0)
-            records.add(data[i].digitToInt())
-        else
-            spaces.add(data[i].digitToInt())
-    }
-
-    val part1 = part1(records, spaces)
-    val part2 = part2(records, spaces)
-    println(part1)
-    println(part2)
+val records = mutableListOf<Int>()
+val spaces = mutableListOf<Int>()
+val data = File("input.txt").readText().trim()
+for (i in data.indices) {
+    if (i % 2 == 0)
+        records.add(data[i].digitToInt())
+    else
+        spaces.add(data[i].digitToInt())
 }
+
+val part1 = part1(records, spaces)
+val part2 = part2(records, spaces)
+println(part1)
+println(part2)
 
 fun part1(records: List<Int>, spaces: List<Int>): Long {
     var index = 0
